@@ -32,9 +32,9 @@ The current Cloudflare staging implementation was audited against controlled-pil
 
 **TASK-003-A — Physical-device PWA offline/reconnect pilot validation**
 
-**Status:** Blocked pending read-only remote record correlation and cleanup of temporary debug snapshots
+**Status:** Completed
 
-Run one controlled HTTPS test with one device, one HSE Staff account, one APAR inspection, one failed item, one compressed image, and one reconnect cycle. Confirm draft/evidence retention, queue synchronization, exactly one remote inspection/finding/evidence result, and no loss of pending work. Do not begin automatically.
+The final controlled HTTPS test used one device, one HSE Staff account, one APAR inspection, one compressed image, and one reconnect cycle. The test intentionally used all-PASS answers, so no finding was expected.
 
 ### Existing operator evidence
 
@@ -45,17 +45,23 @@ Run one controlled HTTPS test with one device, one HSE Staff account, one APAR i
 - Existing evidence/photo opened successfully on mobile.
 - Final linear staging account naming was visible.
 
-### Remaining validation blocker
+### Validation result
 
-The specific inspection/operation ID from that test is not recorded, and the current execution environment cannot authenticate to the remote D1/Worker for a read-only correlation query. Consequently, exact remote uniqueness, failed-answer/note persistence, finding count, evidence metadata/object association, retrieval, and idempotency state for that test cannot yet be established. No new data or cloud mutation was performed.
+Before the final operator correlation was supplied, the inspection ID and remote record-level proof were unavailable. No additional data or cloud mutation was performed.
 
-### Final correlation attempt — 2026-09-28
+The final operator correlation established exactly one submitted APAR inspection containing `PILOT-FINAL-20260928`, one stored evidence metadata record, and one successful operation. All answers were Pass (`failed_answers = 0`), so no finding was expected (`finding_count = 0`). Pending Changes transitioned from `1` to `0`; no duplicate was observed; and evidence opened successfully on mobile.
 
-The supplied correlation note `PILOT-FINAL-20260928` was not found in the local repository. Remote lookup could not be performed because Wrangler has no authenticated session, the deployed Worker requires an authenticated user for state access, and no operator staging session or credential handoff is available. Cloudflare dashboard access likewise requires interactive authentication. No credentials were requested or changed, and no cloud mutation occurred.
+**No confirmed blockers remain for a small controlled pilot.**
 
-### Closeout checkpoint
+Production remains **not production-ready**.
 
-The operator supplied the final correlation query, but its result set has not been returned. JavaScript syntax and root/Cloudflare frontend-copy hashes pass. Python compilation could not run because no Python interpreter is installed in the current Windows environment. Temporary `tmp/served-app-v2.js` and `tmp/served-app-v3.js` files contain the old development demo password and must be removed or excluded before commit. Commit readiness is blocked; no source or cloud changes were made.
+### Earlier correlation limitation — 2026-09-28
+
+The initial execution environment lacked an authenticated remote query path. This was superseded by the operator-provided read-only correlation result below.
+
+### Earlier repository checkpoint
+
+The earlier repository checkpoint recorded missing Python tooling and temporary diagnostic snapshots; those are separate from the completed pilot correlation and were handled as repository-preparation items.
 
 ## TASK-002E-A — Resolve remote authentication CPU compatibility
 

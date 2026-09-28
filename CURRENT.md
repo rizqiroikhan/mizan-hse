@@ -4,9 +4,9 @@ Last updated: 2026-09-28
 
 ## Current Phase
 
-**TASK-003-A — Physical-device PWA offline/reconnect pilot validation is blocked pending record-level remote verification.**
+**Controlled Pilot Candidate — TASK-003-A completed.**
 
-The assessment is complete. The operator has observed the physical-device workflow, but the associated remote inspection/evidence record cannot be identified and queried read-only from this execution environment.
+The final physical-device offline/reconnect test and remote correlation are complete. No confirmed blockers remain for a small controlled pilot. Production readiness has not been declared.
 
 Remote staging authentication now uses the explicit `pbkdf2_sha256_cf_v2_100k` credential profile with Worker-native Web Crypto. Legacy local/demo users retain `pbkdf2_sha256_v1_120k` and the Python compatibility path. Four disposable staging users were reprovisioned with unique salts and credentials; remote valid/invalid login, lockout, disabled-user, logout, and role-boundary checks passed. The 100k profile is a Cloudflare Free staging workaround and requires production security review before pilot use.
 
@@ -79,6 +79,10 @@ The operator supplied the unique note `PILOT-FINAL-20260928`. It is not present 
 ### TASK-003-A closeout checkpoint — 2026-09-28
 
 The operator supplied the correlation SQL but no result set was returned in this session, so remote inspection/finding/evidence/idempotency counts remain unverified. JavaScript syntax and frontend-copy hashes pass. Python compilation could not be executed because no Python interpreter is available in this Windows environment. The workspace contains temporary `tmp/served-app-v2.js` and `tmp/served-app-v3.js` snapshots with the old development demo password; these must be removed or excluded before committing a controlled-pilot baseline. The repository is not commit-ready and the pilot blocker remains open.
+
+### TASK-003-A final result — 2026-09-28
+
+The operator correlated `PILOT-FINAL-20260928` to exactly one remote APAR inspection with status `submitted`, one stored evidence metadata record, and one successful idempotent operation. All checklist answers were intentionally Pass, so `failed_answers = 0` and `finding_count = 0` are expected. The operator observed Pending Changes transition `1 → 0`, no duplicate, successful mobile evidence viewing, and the final linear role/account naming. **No confirmed blockers remain for a small controlled pilot.** Production remains **not production-ready**.
 
 Cloudflare compatibility assessment is recorded in `CLOUDFLARE_COMPATIBILITY.md`. The existing custom server cannot run unchanged in Workers because it depends on `ThreadingHTTPServer`, local SQLite files, filesystem persistence, and process-local locks. The parallel Cloudflare Python Worker now serves the PWA and core structured APIs backed by local D1 at `http://127.0.0.1:8787`. The root local MVP remains the behavioral reference.
 
